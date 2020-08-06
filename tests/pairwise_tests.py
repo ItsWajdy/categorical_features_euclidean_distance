@@ -120,12 +120,3 @@ def test_non_equality_with_categorical_features():
     ground_truth = pw.euclidean_distances(df1.values, df2.values)
 
     assert not np.array_equal(predicted_truth, ground_truth)
-
-
-if __name__ == '__main__':
-    test_basic_functionality()
-    test_dataframes_validation()
-    test_equality_no_categorical_features()
-    test_non_equality_with_categorical_features()
-
-    print('All tests passed!')
