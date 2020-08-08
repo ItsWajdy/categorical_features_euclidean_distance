@@ -13,6 +13,9 @@ def __validate_dataframes(df1, df2):
 
 
 def __validate_split_dataframes(df1_numerical, df1_categorical, df2_numerical, df2_categorical):
+    assert type(df1_numerical) == type(df1_categorical) == type(pd.DataFrame()), 'DataFrames must be passed'
+    assert type(df2_numerical) == type(df2_categorical) == type(pd.DataFrame()), 'DataFrames must be passed'
+
     assert df1_categorical.shape[0] > 0, 'Categorical DataFrames must not be empty'
     assert df1_categorical.shape[1] > 0, 'Categorical DataFrames must not be empty'
     assert df2_categorical.shape[0] > 0, 'Categorical DataFrames must not be empty'
