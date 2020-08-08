@@ -19,7 +19,7 @@ This is where this package comes in. Running my own tests, I concluded that this
 
 ## Prerequisites
 
-See [requirements.txt](https://github.com/ItsWajdy/categorical_features_euclidean_distance/blob/master/requirements.txt) for the full list of Prerequisite libraries.
+See [requirements.txt](https://github.com/ItsWajdy/categorical_features_euclidean_distance/blob/master/requirements.txt) for the full list of prerequisite libraries.
 
 
 ## Installation
