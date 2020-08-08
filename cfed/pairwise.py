@@ -12,6 +12,22 @@ def __validate_dataframes(df1, df2):
     assert all(df1.dtypes[col] == df2.dtypes[col] for col in df1.columns), 'Columns data types do not match'
 
 
+def __validate_split_dataframes(df1_numerical, df1_categorical, df2_numerical, df2_categorical):
+    assert df1_categorical.shape[0] > 0, 'Categorical DataFrames must not be empty'
+    assert df1_categorical.shape[1] > 0, 'Categorical DataFrames must not be empty'
+    assert df2_categorical.shape[0] > 0, 'Categorical DataFrames must not be empty'
+    assert df2_categorical.shape[1] > 0, 'Categorical DataFrames must not be empty'
+
+    assert df1_numerical.shape[0] == df1_categorical.shape[
+        0], 'Numerical and categorical features must have same length'
+    assert df2_numerical.shape[0] == df2_categorical.shape[
+        0], 'Numerical and categorical features must have same length'
+    assert df1_numerical.shape[0] == df2_numerical.shape[0], 'df1 and df2 must have same length'
+
+    __validate_dataframes(df1_numerical, df2_numerical)
+    __validate_dataframes(df1_categorical, df2_categorical)
+
+
 def __get_dummies(df1_categorical, df2_categorical, categorical_features=None):
     df1_length = df1_categorical.shape[0]
 
@@ -53,6 +69,30 @@ def euclidean_distances(df1, df2, categorical_columns=None):
     if df1_categorical.shape[0] > 0 and df1_categorical.shape[1] > 0:
         df1_categorical, df2_categorical = __get_dummies(df1_categorical, df2_categorical,
                                                          categorical_features=categorical_features)
+        matched_features = df1_categorical.dot(df2_categorical.T).toarray()
+        categorical_distances = 2 * (categorical_features_count_squared - matched_features)
+        distances += categorical_distances
+
+    distances = np.sqrt(distances)
+
+    return distances
+
+
+def euclidean_distances_from_split(df1_numerical, df1_categorical, df2_numerical, df2_categorical):
+    __validate_split_dataframes(df1_numerical, df1_categorical, df2_numerical, df2_categorical)
+
+    for col in df1_categorical.columns:
+        df1_categorical = df1_categorical.astype({col: 'category'})
+        df2_categorical = df2_categorical.astype({col: 'category'})
+
+    categorical_features_count = df1_categorical.shape[1]
+    categorical_features_count_squared = categorical_features_count ** 2
+
+    distances = np.power(ground_euclidean_distances(df1_numerical, df2_numerical), 2)
+
+    if df1_categorical.shape[0] > 0 and df1_categorical.shape[1] > 0:
+        df1_categorical, df2_categorical = __get_dummies(df1_categorical, df2_categorical,
+                                                         categorical_features=df1_categorical.columns.tolist())
         matched_features = df1_categorical.dot(df2_categorical.T).toarray()
         categorical_distances = 2 * (categorical_features_count_squared - matched_features)
         distances += categorical_distances
