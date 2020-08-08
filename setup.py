@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="cfed",
-    version="0.0.1",
+    version="1.1",
     author="Wajdy",
     author_email="itswajdy@gmail.com",
     description="A python package to compute pairwise Euclidean distances on datasets with categorical features in little time",
