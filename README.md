@@ -10,7 +10,7 @@ A python package to compute pairwise Euclidean distances on datasets with catego
 
 ## Motivation
 
-In machine learning model development I often ran into datasets with categorical features. Most times dealing with these categorical features was fairly straight forward (I would use the pandas get_dummies() function to convert each feature into a one-hot-encoded representaion).
+In machine learning model development I often ran into datasets with categorical features. Most times dealing with these categorical features was fairly straight forward (I would use the pandas `get_dummies()` function to convert each feature into a one-hot-encoded representaion).
 
 But when the number of categories embedded in these categorical features became massive, I ran into the problem of extremely slow Euclidean distance computation between each sample and every other sample.
 
